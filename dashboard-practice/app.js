@@ -1,4 +1,4 @@
-// 阶段2：卡片——数据加载成功后，按品类渲染统计卡片
+// 阶段3：图表一——ECharts 分组柱状图（比较各月各品类借阅量）
 const state = { data: null };
 
 const loadData = async () => {
@@ -17,6 +17,7 @@ const loadData = async () => {
     $('#sub-title').text(data.title + '（' + data.period + '） · 数据来源：' + data.source);
     $('#status').hide();
     renderCards(data);
+    renderBarChart(data);
   } catch (error) {
     $('#status').text('加载失败：' + error.message).show();
   }
@@ -37,6 +38,29 @@ const renderCards = (data) => {
         </div>
       </div>
     `);
+  });
+};
+
+let barChart = null;
+const renderBarChart = (data) => {
+  if (barChart === null) {
+    barChart = echarts.init(document.querySelector('#bar-chart'));
+  }
+  barChart.setOption({
+    title: { text: '各月各品类借阅量（单位：册）', left: 'center' },
+    tooltip: { trigger: 'axis' },
+    legend: { bottom: 0 },
+    grid: { left: 50, right: 20, top: 60, bottom: 60 },
+    xAxis: {
+      data: data.months,
+      axisLabel: { rotate: 30 }
+    },
+    yAxis: { name: '册' },
+    series: data.series.map(s => ({
+      name: s.category,
+      type: 'bar',
+      data: s.counts
+    }))
   });
 };
 

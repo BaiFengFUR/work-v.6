@@ -7,6 +7,7 @@
   <link rel="icon" href="data:,">
   <link href="libs/bootstrap.min.css" rel="stylesheet">
   <style>
+    .chart-box { height: 420px; }
     #status { display: none; }
   </style>
 </head>
@@ -20,8 +21,16 @@
 
   <section class="row g-3 mb-4" id="cards"></section>
 
+  <section class="row g-3">
+    <div class="col-12">
+      <h2 class="h5">各月借阅量（ECharts柱状图）</h2>
+      <div id="bar-chart" class="chart-box"></div>
+    </div>
+  </section>
+
   <script src="libs/jquery-3.7.1.min.js"></script>
   <script src="libs/bootstrap.bundle.min.js"></script>
+  <script src="libs/echarts.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
