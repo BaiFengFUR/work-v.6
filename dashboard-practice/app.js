@@ -1,4 +1,4 @@
-// 阶段4：图表二——Chart.js 折线图（看一年借阅趋势）+ 窗口 resize 自适应
+// 阶段5：交互——jQuery 事件委托实现卡片点击高亮
 const state = { data: null };
 
 const loadData = async () => {
@@ -96,6 +96,12 @@ const renderLineChart = (data) => {
 
 window.addEventListener('resize', () => {
   if (barChart) barChart.resize();  // Chart.js响应式默认自动处理，无需手动
+});
+
+// 卡片是 fetch 成功后动态生成的，用事件委托绑在父元素 #cards 上即可自动覆盖
+$('#cards').on('click', '.card', function () {
+  // 这里的 this 是原生 DOM 元素，要用 $(this) 包装成 jQuery 对象
+  $(this).toggleClass('border-primary shadow');
 });
 
 loadData();
